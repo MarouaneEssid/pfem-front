@@ -1,0 +1,132 @@
+<div class="animated fadeIn">
+  <div class="row" *ngIf="currentUser">
+    <div class="col-md-3">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flexr text-center">
+            <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
+            <div class="mt-3">
+              <h4>{{ currentUser.firstname }} {{ currentUser.lastname }}</h4>
+              <p class="text-muted font-size-sm">{{ currentUser.email }}</p>
+            </div>
+          </div>
+        </div>    
+      </div>
+    </div>
+    <div class="col-md-9">
+      <div class="card">
+        <div class="card-header">
+          <strong>Votre Profil</strong>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="profileForm" (ngSubmit)="submit()">
+            <!-- FIRSTNAME -->
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="firstname"><strong>Prénom:</strong> </label>
+              <div class="col-md-9">
+                <input 
+                  type="text"
+                  id="firstname"
+                  class="form-control" 
+                  placeholder="Prénom" 
+                  formControlName="firstname" 
+                  [class.is-invalid]="firstname.invalid && (firstname.dirty || firstname.touched)" 
+                />
+                <span class="help-block">vous pouvez changer votre prénom.</span>
+                <small class="text-danger" *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)">
+                  <div *ngIf="firstname.errors.required">champ requis</div>
+                  <div *ngIf="firstname.errors.minlength || firstname.errors.maxlength">prénom invalide</div>
+                </small>
+              </div>
+            </div>
+            <!-- LASTNAME -->
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="lastname"><strong>Nom:</strong></label>
+              <div class="col-md-9">
+                <input 
+                  type="text" 
+                  id="lastname"
+                  class="form-control" 
+                  placeholder="Nom" 
+                  formControlName="lastname"  
+                  [class.is-invalid]="lastname.invalid && (lastname.dirty || lastname.touched)"
+                />
+                <span class="help-block">vous pouvez changer votre nom.</span>
+                <small class="text-danger" *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)">
+                  <div *ngIf="lastname.errors.required">champ requis</div>
+                  <div *ngIf="lastname.errors.minlength || lastname.errors.maxlength">nom invalide</div>
+                </small> 
+              </div>
+            </div>
+            <!-- EMAIL -->
+            <div class="form-group row mb-4">
+              <label class="col-md-3 col-form-label" for="email"><strong>E-mail:</strong></label>
+              <div class="col-md-9">
+                <input 
+                  type="email" 
+                  id="email" 
+                  class="form-control" 
+                  placeholder="E-mail" 
+                  formControlName="email" 
+                  [class.is-invalid]="email.invalid && (email.dirty || email.touched)" 
+                />
+              </div>  
+            </div>
+            <!-- SCHOOL -->
+            <div class="form-group row" *ngIf = "currentUser.role.id == 3" >
+              <label class="col-md-3 col-form-label" for="school"><strong>École:</strong></label>
+              <div class="col-md-9">
+                <input 
+                  type="text" 
+                  id="school" 
+                  class="form-control" 
+                  placeholder="École" 
+                  formControlName="school" 
+                  [class.is-invalid]="school.invalid && (school.dirty || school.touched)" 
+                />
+                <span class="help-block">vous pouvez changer votre école.</span>
+                <small *ngIf="school.invalid && (school.dirty || school.touched)" class="text-danger">
+                  <div *ngIf="school.errors.required">champ requis</div>
+                  <div *ngIf="school.errors.pattern">école invalide</div>
+                </small>
+              </div>  
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="password"><strong>Mot de passe:</strong></label>
+              <div class="col-md-9">
+                <input 
+                  type="password" 
+                  id="password" 
+                  placeholder="nouveau mot de passe" 
+                  class="form-control" 
+                  formControlName="password"
+                />
+                <span class="help-block">vous pouvez changer votre mot de passe</span>
+                <small *ngIf="password.invalid && (password.dirty || password.touched)" class="text-danger">
+                  <div *ngIf="password.errors.minlength">au moins {{ password.errors.minlength.requiredLength }} caractères</div>
+                </small>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="form-group row">
+                <div class="col-md-4 pr-0">
+                  <input
+                    type="password"
+                    placeholder="mot de passe courant" 
+                    (input)="verifyPassword($event.target.value)"
+                    class="form-control"
+                    #checkingPassword
+                  />
+                </div>
+                <div class="col-md-8">
+                  <button type="submit" class="btn btn-primary" [disabled]="!isVerified || profileForm.invalid">Enregistrer</button>
+                  <button type="reset" class="btn btn-light active" (click)="cancel()">Annuler</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>      
+    </div><!--/.col-->
+  </div><!--/.row-->
+</div>

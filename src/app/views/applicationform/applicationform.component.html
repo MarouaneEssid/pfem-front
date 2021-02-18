@@ -1,0 +1,93 @@
+<div class="row">
+  <div class="col-md-10">
+    <div class="card" >
+      <div class="card-header" ><strong>Postuler à </strong> {{ title }}</div>
+      <div class="card-body">
+        <form class="form-horizontal" [formGroup]="applicationForm">
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="nom"> <strong>Nom et Prénom:</strong> </label>
+            <div class="col-md-9 mt-2">
+              <p class="form-control-static">{{ currentUser?.firstname }} {{ currentUser?.lastname }} </p>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="email"><strong>École:</strong></label>
+            <div class="col-md-9 mt-2">
+              <p class="form-control-static">{{ currentUser?.school }}</p>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="file-input"
+              ><strong>Télécharger votre CV</strong></label
+            >
+            <div class="col-md-9">
+              <input
+                accept="application/pdf"
+                type="file"
+                id="file-input"
+                name="file-input"
+                formControlName="resume"
+                [ngClass]="{
+                  'is-invalid': submitted && registerFormControl.resume.errors
+                }"
+                (change)="selectFile($event)"
+                class="wraptext"
+              />
+              <div
+                *ngIf="submitted && registerFormControl.resume.errors"
+                class="text-danger"
+              >
+                <div *ngIf="registerFormControl.resume.errors.required">
+                  Le fichier CV est requis
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="textarea-input"
+              ><strong>Lettre de Motivation</strong></label
+            >
+            <div class="col-md-9">
+              <textarea
+                id="textarea-input"
+                name="textarea-input"
+                rows="12"
+                class="form-control"
+                placeholder="Lettre de motivation"
+                formControlName="coverLetter"
+                [ngClass]="{
+                  'is-invalid':
+                    submitted && registerFormControl.coverLetter.errors
+                }"
+              ></textarea>
+              <div
+                *ngIf="submitted && registerFormControl.coverLetter.errors"
+                class="text-danger"
+              >
+                <div *ngIf="registerFormControl.coverLetter.errors.required">
+                  la lettre de motivation est requise
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <button
+              type="submit"
+              class="btn btn-sm btn-primary"
+              (click)="save()"
+            >
+              <i class="fa fa-dot-circle-o"></i> Envoyer la candidature
+            </button>
+            <button
+              type="reset"
+              class="btn btn-sm btn-danger"
+              (click)="redirect()"
+            >
+              <i class="fa fa-ban"></i> Ignorer la candidature
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

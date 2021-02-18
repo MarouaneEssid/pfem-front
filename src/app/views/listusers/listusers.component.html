@@ -1,0 +1,273 @@
+<!-- STATISTICS -->
+<h2>Tableau de bord de l'administrateur</h2>
+<div class="row d-flex justify-content-between">
+  <div class="card mb-3 col-sm-6 col-lg-3">
+    <div class="card-body">
+      <div class="h1 text-muted text-right mb-4">
+        <i class="icon-user-follow"></i>
+      </div>
+      <div class="h4 mb-0">{{ nbStudent }}</div>
+      <small class="text-muted text-uppercase font-weight-bold">Nombre des étudiants</small>
+      <div class="progress progress-xs mt-3 mb-0">
+        <div
+          class="progress-bar bg-info"
+          role="progressbar"
+          style="width: 25%"
+          aria-valuenow="25"
+          aria-valuemin="0"
+          aria-valuemax="100">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card mb-3 col-sm-6 col-lg-3">
+    <div class="card-body">
+      <div class="h1 text-muted text-right mb-4">
+        <i class="icon-people"></i>
+      </div>
+      <div class="h4 mb-0">{{ nbCollab }}</div>
+      <small class="text-muted text-uppercase font-weight-bold">Nombre des collaborateurs</small>
+      <div class="progress progress-xs mt-3 mb-0">
+        <div
+          class="progress-bar bg-success"
+          role="progressbar"
+          style="width: 25%"
+          aria-valuenow="25"
+          aria-valuemin="0"
+          aria-valuemax="100">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card mb-3 col-sm-6 col-lg-3">
+    <div class="card-body">
+      <div class="h1 text-muted text-right mb-4">
+        <i class="icon-envelope-letter"></i>
+      </div>
+      <div class="h4 mb-0">{{ nbApplications }}</div>
+      <small class="text-muted text-uppercase font-weight-bold">Nombre des candidatures</small>
+      <div class="progress progress-xs mt-3 mb-0">
+        <div
+          class="progress-bar bg-warning"
+          role="progressbar"
+          style="width: 25%"
+          aria-valuenow="25"
+          aria-valuemin="0"
+          aria-valuemax="100">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card mb-3 col-sm-6 col-lg-3">
+    <div class="card-body">
+      <div class="h1 text-muted text-right mb-4">
+        <i class="icon-pencil"></i>
+      </div>
+      <div class="h4 mb-0">{{ nbSubjects }}</div>
+      <small class="text-muted text-uppercase font-weight-bold">Nombre des sujets</small>
+      <div class="progress progress-xs mt-3 mb-0">
+        <div
+          class="progress-bar bg-danger"
+          role="progressbar"
+          style="width: 25%"
+          aria-valuenow="25"
+          aria-valuemin="0"
+          aria-valuemax="100">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- USERS LIST -->
+<div class="animated fadeIn" *ngIf="users">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-users"></i> Liste des utilisateurs
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Nom et Prénom</th>
+                  <th>E-mail</th>
+                  <th>École</th>
+                  <th>Role</th>
+                  <th>Mot de passe</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let user of users">
+                  <td>{{ user.firstname }} {{ user.lastname }}</td>
+                  <td>{{ user.email }}</td>
+                  <td>{{ user.school }}</td>
+                  <td>{{ user.role.name }}</td>
+                  <td>
+                    <button
+                      type="reset"
+                      class="btn btn-sm btn-light active"
+                      (click)="modifyPassword(template2, user)"> Modifier
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      type="reset"
+                      class="btn btn-sm btn-danger"
+                      title="Supprimer"
+                      (click)="deleteUser(user)">
+                      <i class="fa fa-trash-o"></i>
+                    </button>
+                    <button
+                      type="reset"
+                      class="btn btn-sm btn-light active"
+                      title="Modifier"
+                      (click)="openUser(template, user)">
+                      <i class="fa fa-pencil-square-o"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/.col-->
+  </div>
+  <!--/.row-->
+</div>
+
+<!-----------update pop up template----------- -->
+
+<ng-template #template>
+  <div class="card">
+    <div class="card-header d-flex justify-content-between">
+      <div class="mt-1"><strong>Profil</strong></div>
+      <button
+                      type="reset"
+                      class="btn btn-sm btn-light"
+                      title="Fermer"
+                      (click)="cancel()"
+                    >
+                      <i class="fa fa-close" style="color:black; font-size: 20px"></i>
+                    </button>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="updateForm" (ngSubmit)="updateUser()">
+        <!-- FIRSTNAME -->
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label" for="firstname">Prénom:</label>
+          <div class="col-md-9">
+            <input
+              type="text"
+              id="firstname"
+              class="form-control"
+              placeholder="Prénom"
+              formControlName="firstname"
+            />
+          </div>
+        </div>
+        <!-- LASTNAME -->
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label" for="lastname">Nom:</label>
+          <div class="col-md-9">
+            <input
+              type="text"
+              id="lastname"
+              class="form-control"
+              placeholder="Nom"
+              formControlName="lastname"
+            />
+          </div>
+        </div>
+        <!-- EMAIL -->
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label" for="email">E-mail:</label>
+          <div class="col-md-9">
+            <input
+              type="text"
+              id="email"
+              class="form-control"
+              placeholder="E-mail"
+              formControlName="email"
+            />
+          </div>
+        </div>
+        <!-- ROLE -->
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label" for="role">Rôle:</label>
+          <div class="col-md-9">
+            <select
+              id="role"
+              class="form-control"
+              formControlName="role">
+                <option value='{"id":3,"name":"STUDENT"}'>STUDENT</option>
+                <option value='{"id":2,"name":"COLLAB"}'>COLLAB</option>
+                <option value='{"id":1,"name":"ADMIN"}'>ADMIN</option>
+            </select>
+          </div>
+        </div>
+        <div class="card-footer">
+          <button type="submit" class="btn btn-sm btn-primary">
+            Enregistrer
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</ng-template>
+<!-----------Set password pop up template----------- -->
+
+<ng-template #template2>
+  <div class="card">
+    <div class="card-header d-flex justify-content-between">
+      <div class="mt-1"><strong>Modifier le mot de passe</strong></div>
+      <button
+                      type="reset"
+                      class="btn btn-sm btn-light"
+                      title="Fermer"
+                      (click)="cancel()"
+                    >
+                      <i class="fa fa-close" style="color:black; font-size: 20px"></i>
+                    </button>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="updateForm" (ngSubmit)="updatePassword()">
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label" for="email">E-mail:</label>
+          <div class="col-md-9">
+            <input
+              type="text"
+              id="email"
+              class="form-control"
+              placeholder="E-mail"
+              formControlName="email"
+            />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label" for="password">Mot de passe:</label
+          >
+          <div class="col-md-9 mt-2">
+            <input
+              type="password"
+              id="password"
+              name="password"
+              class="form-control"
+              placeholder="Nouveau mot de passe"
+              formControlName="password"
+            />
+          </div>
+        </div>
+        <div class="card-footer">
+          <button type="submit" class="btn btn-sm btn-primary">
+            Modifier
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</ng-template>

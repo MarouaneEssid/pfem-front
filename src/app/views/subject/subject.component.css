@@ -1,0 +1,27 @@
+
+
+.btn-secondary{
+    background-color:#38ada9;
+    color:white;
+}
+.scroll{
+    height: 250px; 
+    overflow-y: scroll;
+}
+.btns{
+float: right;
+    
+}
+li{
+    list-style: none;
+   
+}
+li b,h5{
+    color: #002d5f;
+}
+.card-header span{
+    float: right;
+     font-size: 12px;
+     padding-top: 5px;
+}
+

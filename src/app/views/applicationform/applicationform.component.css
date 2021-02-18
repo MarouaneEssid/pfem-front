@@ -1,0 +1,9 @@
+.wraptext {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 700px;
+    white-space: nowrap;
+  }
+  .wraptext:hover {
+    overflow: visible;
+  }

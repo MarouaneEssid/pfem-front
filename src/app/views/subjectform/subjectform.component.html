@@ -1,0 +1,111 @@
+<div class="card" style="width: 90%">
+  <div class="card-header">
+    <strong>Ajout d'un nouveau sujet de PFE</strong>
+  </div>
+  <div class="card-body">
+    <form
+      [formGroup]="subjectForm"
+      (ngSubmit)="onSubmit()"
+      class="form-horizontal"
+    >
+      <!-- TITLE -->
+      <div class="form-group row">
+        <label class="col-md-2 col-form-label" for="title">Titre</label>
+        <div class="col-md-9">
+          <input
+            type="text"
+            id="title"
+            placeholder="titre du sujet"
+            formControlName="title"
+            class="form-control row"
+            [class.is-invalid]="title.invalid && (title.dirty || title.touched)"
+          />
+          <small *ngIf="title.invalid && (title.dirty || title.touched)" class="text-danger row">
+            <div *ngIf="title.errors.required">champ requis</div>
+            <div *ngIf="title.errors.minlength"> au moins {{ title.errors.minlength.requiredLength }} caractères </div>
+          </small>
+        </div>
+      </div>
+      <!-- DESCRIPTION -->
+      <div class="form-group row">
+        <label class="col-md-2 col-form-label" for="description">Description du sujet</label>
+        <div class="col-md-9">
+          <textarea
+            type="text"
+            rows="9"
+            id="description"
+            placeholder="description du sujet"
+            formControlName="description"
+            class="form-control row"
+            [class.is-invalid]="description.invalid && (description.dirty || description.touched)">
+          </textarea>
+          <small *ngIf="description.invalid && (description.dirty || description.touched)" class="text-danger row">
+            <div *ngIf="description.errors.required">champ requis</div>
+            <div *ngIf="description.errors.minlength">
+              au moins {{ description.errors.minlength.requiredLength }} caractères
+            </div>
+          </small>
+        </div>
+      </div>
+      <!-- START DATE -->
+      <div class="form-group row">
+        <label class="col-md-2 col-form-label" for="start-date">Date de début</label>
+        <div class="col-md-9">
+          <input
+            type="date"
+            id="start-date"
+            formControlName="startDate"
+            class="form-control row"
+            [class.is-invalid]="startDate.invalid && (startDate.dirty || startDate.touched)"
+            (change)="validationError=''"
+          />
+          <small *ngIf="startDate.invalid && (startDate.dirty || startDate.touched)" class="text-danger row">
+            <div *ngIf="startDate.errors.required">champ requis</div>
+          </small>
+        </div>
+      </div>
+      <!-- END DATE -->
+      <div class="form-group row">
+        <label class="col-md-2 col-form-label" for="end-date"
+          >Date de fin</label
+        >
+        <div class="col-md-9">
+          <input
+            type="date"
+            id="end-date"
+            formControlName="endDate"
+            class="form-control row"
+            [class.is-invalid]="endDate.invalid && (endDate.dirty || endDate.touched)"
+            (change)="validationError=''"
+          />
+          <small *ngIf="endDate.invalid && (endDate.dirty || endDate.touched)" class="text-danger row">
+            <div *ngIf="endDate.errors.required">champ requis</div>
+          </small>
+        </div>
+      </div>
+      <!-- TECHNOLOGIES -->
+      <div class="form-group row">
+        <label class="col-md-2 col-form-label">Technologies</label>
+        <div class="col-md-9">
+          <ng-select [items]="tags"
+                     [addTag]="addTagPromise"
+                     bindLabel="name"
+                     placeholder="technologies"
+                     multiple="true"
+                     formControlName ="technologies"
+                     class="form-control row"
+                     [class.is-invalid]="technologies.invalid && (technologies.dirty || technologies.touched)"> 
+          </ng-select>          
+        </div>
+      </div>
+      <div class="card-footer d-flex justify-items-center">
+        <button
+          type="submit"
+          [disabled]="subjectForm.invalid"
+          class="btn btn-primary"> Créer un nouveau sujet
+        </button>
+        <span class="text-danger m-2" role="alert" data-auto-dismiss="2000">{{ validationError }}</span>
+      </div>
+    </form>
+  </div>
+</div>

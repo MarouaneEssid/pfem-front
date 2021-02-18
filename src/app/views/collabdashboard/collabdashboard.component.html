@@ -1,0 +1,134 @@
+<h1>Gestion des candidatures</h1>
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-lg-12" >
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-file-pdf-o"></i> Liste des candidatures
+        </div>
+        <div class="card-body" >
+          <div class="table-responsive">
+          <table class="table table-bordered table-striped table-sm" >
+            <thead>
+              <tr>
+                <th>Nom & Prénom</th>
+                <th>E-mail</th>
+                <th>École</th>
+                <th>Lettre de motivation</th>
+                <th>CV</th>
+                <th>Sujet</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let item of applications">
+          
+              <tr>
+                <td>{{item.userDTO.firstname}} {{item.userDTO.lastname}}</td>
+                <td>{{item.userDTO.email}}</td>
+                <td>{{item.userDTO.school}}</td>
+                <td><button type="reset" class="btn btn-sm btn-secondary" (click)="clicktoSeeCoverLetter(template, item.coverLetter)"> Consulter la lettre de motivation</button></td>
+                <td>
+                  <button type="reset" class="btn btn-sm btn-link" (click)="clicktoDownload(item.id,item.resume)" > <a href={{fileUrl}}>Télécharger </a></button>
+                </td>
+                <td>
+                  <button type="reset" class="btn btn-sm btn-link" (click)="showDetails(template2,item.subjectDTO)" > {{item.subjectDTO.title}} </button>
+                  
+                </td>
+              </tr>
+            
+            </tbody>
+          </table>
+        </div>
+        </div>
+      </div>
+    </div>
+    <!--/.col-->
+  </div>
+  <!--/.row-->
+</div>
+<!-----------CoverLetter pop up template------------->
+<ng-template #template>
+<div class="card">
+  <div class="card-header d-flex justify-content-between ">
+    <div class="mt-1"> <strong> Lettre de motivation</strong> </div>
+    <button
+                      type="reset"
+                      class="btn btn-sm btn-light"
+                      title="Fermer"
+                      (click)="cancel()"
+                    >
+                      <i class="fa fa-close" style="color:black; font-size: 20px"></i>
+                    </button>
+  </div>
+  <div class="card-body">
+    <textarea
+                class="col-md-12"
+                rows="17"
+                [placeholder]="currentCoverLetter"
+                style="border: none;"
+                disabled
+              ></textarea>
+      
+  </div>
+</div>
+</ng-template>
+<!-- ------------ -->
+<ng-template #template2>
+  <div class="card">
+    <div class="card-header d-flex justify-content-between">
+      <div class="mt-1"><strong>détails du sujet</strong></div>
+      <button
+                      type="reset"
+                      class="btn btn-sm btn-light"
+                      title="Fermer"
+                      (click)="cancel()"
+                    >
+                      <i class="fa fa-close" style="color:black; font-size: 20px"></i>
+                    </button>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="infoForm"  class="form-horizontal">
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label" for="text-input">Titre:</label>
+          <div class="col-md-9">
+            <input type="text" id="text-input1" name="title" [value]="currentItem2?.title" class="form-control"
+              placeholder="Subject title" formControlName="title" disabled />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label" for="text-input">Description:</label>
+          <div class="col-md-9">
+            <textarea type="text" id="text-input2" name="description" class="form-control"
+              placeholder="Subject description" formControlName="description" [value]="currentItem2?.description"
+              disabled  rows="9"> </textarea>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label" for="date-input1">Date de début:</label>
+          <div class="col-md-9 mt-2">
+            <input class="form-control" id="date-input1" type="date" name="startDate" placeholder="date"
+              formControlName="startDate" [value]="currentItem2?.startDate.slice(0,10)" disabled />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label" for="date-input2">Date de fin:</label>
+          <div class="col-md-9">
+            <input class="form-control" id="date-input2" type="date" name="endDate" placeholder="date"
+              formControlName="endDate" [value]="currentItem2?.endDate.slice(0,10)" disabled />
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label">Technologies:
+          </label>
+          <div class="col-md-9 col-form-label">
+            <ng-select [items]="technologies" bindLabel="name"  placeholder="Select item" appendTo="body" multiple="true"
+              [(ngModel)]="selected" style="font-family: roboto" formControlName="technologies" disabled>
+              <ng-option *ngFor="let item of technologies">
+              </ng-option>
+            </ng-select>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,35 @@
+.container {
+    width: 25rem;
+    height: 100%;
+    margin: 0 1rem;
+    margin-bottom: 1rem;
+  }
+  .searchbar {
+    font-size: 1.2rem;
+    width: 25rem;
+    height: 0.5rem;
+    border: none;
+    outline: none;
+    border-radius: 10rem;
+    box-shadow: 0 1rem 2rem rgba(black, .1);
+    padding: 2rem;
+  }
+  .button {
+    height: 2rem;
+    position: absolute;
+    top: 1.5rem;
+    right: 1rem;
+  }
+  .button:hover {
+    cursor: pointer;
+  }
+  
+  .searchbar:hover  {
+    height: 2.5rem;
+    top: 1.8rem;
+    right: 0;
+  }
+  
+  .searchbar::placeholder {
+    opacity: .5;
+  }

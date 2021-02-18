@@ -1,0 +1,163 @@
+<div class="animated fadeIn" *ngIf="currentUser && (subjects$ | async)">
+  <button  class="btn btn-primary" (click) = "mySubjects()" *ngIf = "currentUser.role.id == 2" style="margin-bottom:10px;width: 121px;">Mes sujets</button>
+  <button class="btn btn-primary" (click) = "allSubjects()" *ngIf = "currentUser.role.id == 2" style="margin-bottom:10px;">Tous les sujets</button>
+  <div class="row">
+    <div class="col-sm-6" *ngFor="let subject of filterSubjects()">
+      <div class="card" id="{{ subject.id }}">
+        <h5 class="card-header">
+          {{ subject.title }} <span> Publié le {{ subject.publicationDate | date:'d-M-yyyy' }} </span>
+        </h5>
+        
+        <div class="card-body scroll">
+          <ul>
+            <li><b> Description de l'offre: </b> <br> {{ subject.description }}</li>
+            <li *ngIf="subject.technologies.length != 0">
+              <b> Technologies:</b>
+              <br> <span *ngFor="let technology of subject.technologies" class="btn btn-light ml-1 mt-1"> {{ technology.name }}
+              </span>
+            </li>
+            <li>
+              <b> Période de stage:</b
+              > <br>de {{ subject.startDate | date:'d-M-yyyy' }} à  {{ subject.endDate | date:'d-M-yyyy' }}
+            </li>
+          </ul>
+        </div>
+        <div class="card-footer" style="height: 4rem;">
+          <button type="button" class="btn btn-primary" *ngIf = "currentUser.role.id == 3" (click)="apply(subject)">Postuler</button>
+         <div class="btns"> 
+          <button
+            type="button"
+            class="btn btn-light"
+            (click)="deleteSubject(subject)"
+            *ngIf = "currentUser.role.id == 1 || (currentUser.role.id == 2 && currentUser.id == subject.userDTO.id)"
+            title="Supprimer">
+            <i class="fa fa-trash-o" style="color: red;font-size: 25px;"></i>
+          </button>
+          <button
+            type="button"
+            class="btn btn-light"
+            (click)="openSubject(template, subject)"
+            *ngIf = "currentUser.role.id == 1 || (currentUser.role.id == 2 && currentUser.id == subject.userDTO.id)"
+            title="Modifier">
+          <i class="fa fa-pencil-square-o" style="color: #002d5f;font-size: 25px;padding-top: 2px;"></i>
+          </button>
+      </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- UPDATE TEMPLATE -->
+<ng-template #template>
+  <div class="card">
+    <div class="card-header d-flex justify-content-between">
+      <div class="mt-1"><strong>Mettre à jour le sujet</strong></div>
+      <button
+                      type="reset"
+                      class="btn btn-sm btn-light"
+                      title="Fermer"
+                      (click)="cancel()"
+                    >
+                      <i class="fa fa-close" style="color:black; font-size: 20px"></i>
+                    </button>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="updateForm" (ngSubmit)="updateSubject()" class="form-horizontal">
+        <!-- TITLE -->
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label" for="title">Titre:</label>
+          <div class="col-md-9">
+            <input 
+              type="text" 
+              id="title" 
+              class="form-control row"
+              [class.is-invalid]="title.invalid && (title.dirty || title.touched)"
+              placeholder="titre du sujet" 
+              formControlName="title" 
+            />
+            <small *ngIf="title.invalid && (title.dirty || title.touched)" class="text-danger row">
+              <div *ngIf="title.errors.required">champ requis</div>
+              <div *ngIf="title.errors.minlength"> au moins {{ title.errors.minlength.requiredLength }} caractères </div>
+            </small>
+          </div>
+        </div>
+        <!-- DESCRIPTION -->
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label" for="description">Description:</label>
+          <div class="col-md-9">
+            <textarea 
+              type="text" 
+              id="description" 
+              class="form-control row"
+              [class.is-invalid]="description.invalid && (description.dirty || description.touched)"
+              placeholder="description du sujet" 
+              formControlName="description" 
+              rows="9">
+            </textarea>
+            <small *ngIf="description.invalid && (description.dirty || description.touched)" class="text-danger row">
+              <div *ngIf="description.errors.required">champ requis</div>
+              <div *ngIf="description.errors.minlength">
+                au moins {{ description.errors.minlength.requiredLength }} caractères
+              </div>
+            </small>
+          </div>
+        </div>
+        <!-- START-DATE -->
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label" for="startDate">Date de début:</label>
+          <div class="col-md-9 mt-2">
+            <input 
+              class="form-control row"
+              [class.is-invalid]="startDate.invalid && (startDate.dirty || startDate.touched)"
+              id="startDate"
+              type="date"
+              placeholder="date de début"
+              formControlName="startDate" 
+            />
+            <small *ngIf="startDate.invalid && (startDate.dirty || startDate.touched)" class="text-danger row">
+              <div *ngIf="startDate.errors.required">champ requis</div>
+            </small>
+          </div>
+        </div>
+        <!-- END-DATE -->
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label" for="endDate">Date de fin:</label>
+          <div class="col-md-9">
+            <input 
+              class="form-control row"
+              [class.is-invalid]="endDate.invalid && (endDate.dirty || endDate.touched)"
+              id="endDate" 
+              type="date" 
+              name="endDate" 
+              placeholder="date de fin"
+              formControlName="endDate" 
+            />
+            <small *ngIf="endDate.invalid && (endDate.dirty || endDate.touched)" class="text-danger row">
+              <div *ngIf="endDate.errors.required">champ requis</div>
+            </small>
+          </div>
+        </div>
+        <!-- TECHNOLOGIES -->
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label">Technologies:</label>
+          <div class="col-md-9 pl-0 pr-4">
+            <ng-select 
+              [items]="tags" 
+              [addTag]="addTagPromise"
+              bindLabel="name" 
+              placeholder="technologies" 
+              appendTo="body" 
+              multiple="true"
+              formControlName="technologies">
+            </ng-select>
+          </div>
+        </div>
+        <div class="card-footer">
+          <button type="submit" class="btn btn-sm btn-primary">
+            <i class="fa fa-dot-circle-o"></i> Enregistrer
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</ng-template>

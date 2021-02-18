@@ -1,0 +1,126 @@
+<div class="app-body">
+  <main class="main d-flex align-items-center">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 mx-auto">
+          <div class="card mx-4">
+            <div class="card-body p-4">
+              <form [formGroup]="registerForm" (ngSubmit)="submit()">
+                <h1>Inscription</h1>
+                <p class="text-muted">Créez votre compte</p>
+                <!-- EMAIL -->
+                <div class="form-group mb-3">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">@</span>
+                    </div>
+                    <input type="text"
+                           class="form-control"
+                           placeholder="E-mail" 
+                           formControlName="email"
+                           [class.is-invalid]="email.invalid && (email.dirty || email.touched)"
+                    />
+                  </div>
+                  <small *ngIf="email.invalid && (email.dirty || email.touched)" class="text-danger">
+                    <div *ngIf="email.errors.required">champ requis</div>
+                    <div *ngIf="email.errors.pattern">adresse invalide</div>
+                  </small>
+                </div>
+                <!-- FIRSTNAME -->
+                <div class="form-group mb-3">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">
+                        <i class="icon-info"></i></span>
+                    </div>
+                    <input type="text"
+                           class="form-control" 
+                           placeholder="Prénom" 
+                           formControlName="firstname"
+                           [class.is-invalid]="firstname.invalid && (firstname.dirty || firstname.touched)" 
+                    />
+                  </div>
+                  <small class="text-danger" *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)">
+                    <div *ngIf="firstname.errors.required">champ requis</div>
+                    <div *ngIf="firstname.errors.minlength || firstname.errors.maxlength">prénom invalide</div>
+                  </small>
+                </div>
+                <!-- LASTNAME -->
+                <div class="form-group mb-3">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">
+                        <i class="icon-info"></i></span>
+                    </div>
+                    <input type="text"
+                           class="form-control"
+                           placeholder="Nom"
+                           formControlName="lastname" 
+                           [class.is-invalid]="lastname.invalid && (lastname.dirty || lastname.touched)"
+                    />
+                  </div>
+                  <small class="text-danger" *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)">
+                    <div *ngIf="lastname.errors.required">champ requis</div>
+                    <div *ngIf="lastname.errors.minlength || lastname.errors.maxlength">nom invalide</div>
+                  </small>
+                </div>
+                <!-- PASSWORD -->
+                <div class="form-group mb-3">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="icon-lock"></i></span>
+                    </div>
+                    <input type="password"
+                           class="form-control"
+                           placeholder="Mot de passe"
+                           formControlName="password"
+                           [class.is-invalid]="password.invalid && (password.dirty || password.touched)"
+                    />
+                  </div>
+                  <small class="text-danger" *ngIf="password.invalid && (password.dirty || password.touched)">
+                    <div *ngIf="password.errors.required">champ requis</div>
+                    <div *ngIf="password.errors.minlength">
+                      minimum length is {{ password.errors.minlength.requiredLength }}
+                    </div>
+                  </small>
+                </div>
+                <!-- <div class="input-group mb-4">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="icon-lock"></i></span>
+                  </div>
+                  <input type="password" class="form-control" placeholder="Repeat password" autocomplete="new-password"
+                    required>
+                </div> -->
+                <!-- SCHOOL -->
+                <div class="form-group mb-3">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">
+                        <i class="icon-home"></i></span>
+                    </div>
+                    <input type="text"
+                           class="form-control"
+                           placeholder="école"
+                           formControlName="school" 
+                           [class.is-invalid]="school.invalid && (school.dirty || school.touched)"
+                    />
+                  </div>
+                  <small class="text-danger" *ngIf="school.invalid && (school.dirty || school.touched)">
+                    <div *ngIf="school.errors.required">champ requis</div>
+                    <div *ngIf="school.errors.minlength || school.errors.maxlength">école invalide</div>
+                  </small>
+                </div>
+                <button type="submit" class="btn btn-block btn-success"[disabled]="registerForm.invalid">
+                  Créez votre compte
+                </button>
+              </form>
+            </div>
+            <div class="card-footer p-1">
+              <img src="assets/img/brand/register.jpg" alt="rejoindre talan" class="card-img">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

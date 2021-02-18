@@ -1,0 +1,163 @@
+html,body {
+    height: 200%;
+    margin: 0;
+    overflow: hidden;
+
+ }
+ body { background-color: white !important; }
+ html { overflow-y: scroll; }
+ /* *{
+     background-color: white;
+ } */
+ #bg {
+
+    width: 100%; 
+    height: 25%;
+    z-index: -1;
+  }
+  #bg img {
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    right: 0; 
+    bottom: 0; 
+    width: 100%;
+    height: 80%;
+    margin-bottom: 0; 
+    z-index: -1;
+  }
+.header{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 2;
+    height: 70px;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    background-color: white;
+    justify-content: space-between;
+}
+
+
+#logo{
+    height: 70px;
+    width: 100px;
+}
+
+
+
+footer{
+    position:absolute;
+    top: 360%;
+     width: 100vw; 
+     background-color: #f8f9fa;
+     border-top: solid 1px  #dadce0; 
+     left: 0;
+}
+
+
+.myButton {
+	box-shadow: 0px 10px 14px -7px #9fb4f2;
+
+	/* background-color:#552cf0; */
+	border-radius:8px;
+    display:inline-block;
+    text-align: center;
+	cursor:pointer;
+    color:#ffffff;
+    padding-top: 7px;
+	font-family:Arial;
+	font-size:17px;
+	text-decoration:none;
+    text-shadow:0px 1px 0px #283966;
+    height: 40px;
+    width: 130px;
+}
+.myButton:hover {
+	background:linear-gradient(to bottom, #476e9e 5%, #7892c2 100%);
+	background-color:#476e9e;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+}
+.registerBtn{	
+    box-shadow: 0px 10px 14px -7px #9fb4f2;
+    text-align: center;
+	background-color:#26ccd3;
+	border-radius:8px;
+	display:inline-block;
+	cursor:pointer;
+    color:#ffffff;
+    padding-top: 7px;
+	font-family:Arial;
+	font-size:17px;
+	text-decoration:none;
+    text-shadow:0px 1px 0px #283966;
+    height: 40px;
+    width: 130px;
+}
+
+.registerBtn:hover {
+	background-color:#476e9e;
+}
+.registerBtn:active {
+	position:relative;
+	top:1px;
+}
+h1 h2 {
+    color: white;
+}
+.info{
+    width: 80vw;
+    height: 15vh;
+    margin-left: 1vw;
+    z-index: 50;
+    margin-top: 30vh;
+}
+#lamp{
+    margin-top: 2vh;
+    height: 21vh;
+    width: 20vw;
+}
+.techno{
+    margin-top: 40vh;
+    margin-left: 2vw;
+}
+.techno-card-container{
+    margin-left: 0vh;
+    display: flex;
+    justify-content: space-around;
+}
+.card-body  {
+    text-align: center;
+}
+.card-body p {
+    color:#002d5f;
+}
+
+.data{
+    margin-left: 25vw;
+    display: flex;
+    justify-content: space-between; 
+    
+}
+.info-2021 {
+    padding-top: 7vh;
+}
+.info-2020 {
+    padding-top: 7vh;
+}
+.info-2019{
+    padding-top: 7vh;
+}
+.data-info{
+    margin-left: 2vw;
+}
+/* .card:hover{
+    box-shadow:1px 5px 5px #283966;
+} */
+.card{
+    box-shadow:0 4px 8px 0 rgba(0,0,0,0.2);  ;
+}
