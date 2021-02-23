@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://localhost:3035'
+  apiUrl: 'http://pfemback:3035'
 };
